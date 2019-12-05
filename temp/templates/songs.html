@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block body_content %}
+	<h1>Songs</h1>
+	<h1>{{ current_user.first_name }} {{ current_user.last_name}} {{ current_user.password}} </h1>
+	<p>I hope to display songs here saved in a database to start with</p>
+	<div class="form">
+                <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                               {{ form.title.label }}
+                                {% if form.title.errors %}
+                                        {{ form.title }}
+                                        <div class="error">
+                                                {% for error in form.title.errors %}
+                                                        <span>{{ error }}</span>
+                                                {% endfor %}
+                                        </div>
+                                {% else %}
+                                        {{ form.title }}
+                                {% endif %}
+                        </div>
+                        <br>
+                        <div class="form-group">
+                                {{ form.artist.label }}
+                                {% if form.artist.errors %}
+                                        {{ form.artist }}
+                                        <div class="error">
+                                                {% for error in form.artist.errors %}
+                                                        <span>{{ error }}</span>
+                                                {% endfor %}
+                                        </div>
+                                {% else %}
+                                        {{ form.artist }}
+                                {% endif %}
+                        </div>
+			<br>
+                        <div class="form-group">
+                                {{ form.album.label }}
+                                {% if form.album.errors %}
+                                        {{ form.album }}
+                                        <div class="error">
+                                                {% for error in form.album.errors %}
+                                                        <span>{{ error }}</span>
+                                                {% endfor %}
+                                        </div>
+                                {% else %}
+                                        {{ form.album }}
+                                {% endif %}
+                        </div>
+			<br>
+			<div class="form-group">
+                                {{ form.genre.label }}
+                                {% if form.genre.errors %}
+                                        {{ form.genre }}
+                                        <div class="error">
+                                                {% for error in form.genre.errors %}
+                                                        <span>{{ error }}</span>
+                                                {% endfor %}
+                                        </div>
+                                {% else %}
+                                        {{ form.genre }}
+                                {% endif %}
+                        </div>
+			<br>
+			<br>
+                        <div class="form-group">
+                                {{ form.submit }}
+                        </div>
+
+            	</form>
+	</div>
+{% endblock body_content %}
