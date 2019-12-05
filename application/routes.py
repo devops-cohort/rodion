@@ -98,7 +98,7 @@ def account():
 
     return render_template('account.html', title='Account', form=form)
 
-@app.route('/delete', methods=['GET','POST'])
+@app.route('/delete_account', methods=['GET','POST'])
 def delete_account():
     user = Users.query.filter_by(id=current_user.id)
     db.session.delete(user)
