@@ -1,0 +1,36 @@
+
+{% extends "layout.html" %}
+{% block body_content %}
+        <h1>Show Songs</h1>
+        <p>I hope to display songs here saved in a database to start with</p>
+ 	<h3>Title, Artist, Album, Genre</h3>
+	<div class="form">
+                <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                               {{ form.title.label }}
+                                {% if form.title.errors %}
+                                        {{ form.title }}
+                                        <div class="error">
+                                                {% for error in form.title.errors %}
+                                                        <span>{{ error }}</span>
+                                                {% endfor %}
+                                        </div>
+                                {% else %}
+                                        {{ form.title }}
+                                {% endif %}
+                        </div>
+		</form>
+	</div>
+	<br>
+	<div class="form-group">
+		{{ form.submit }}
+	</div>
+	{% for song in songs %}
+		<div>
+			<h3>{{ song.title }}, {{ song.artist }}, {{ song.album }}, {{ song.genre }}
+			</h3>
+			<br>
+		</div>
+	{% endfor %}
+{% endblock body_content %}

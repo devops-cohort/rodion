@@ -2,7 +2,7 @@ from flask import render_template,redirect, url_for, request
 from application import app, db
 from application.models import Users, Songs
 #Posts in previous import
-from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, SongForm
+from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, AddSongForm, ShowSongForm
 #PostForm in previous import
 from application import app,db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
@@ -57,9 +57,9 @@ def register():
 
 
 @login_required
-@app.route('/songs', methods=['GET','POST'])
-def songs():
-    form = SongForm()
+@app.route('/addsongs', methods=['GET','POST'])
+def addsongs():
+    form = AddSongForm()
     if request.method == 'POST':
         song = Songs(
                 title=form.title.data,
@@ -67,9 +67,19 @@ def songs():
                 album=form.album.data,
                 genre=form.genre.data)
     
-        db.session.add(song)i
+        db.session.add(song)
         db.session.commit()
-    return render_template('songs.html', title='Songs', form=form)
+    return render_template('addsongs.html', title='Add Songs', form=form)
+
+@app.route('/showsongs', methods=['GET'])
+def showsongs():
+    print("#################################")
+    form = ShowSongForm()
+    title = form.title
+    songsData = Songs.query.all()
+    print("#################################")
+
+    return render_template('showsongs.html', title='Show Songs',songs=songsData, form=form)
 
 @app.route("/logout")
 def logout():
@@ -92,6 +102,15 @@ def account():
         form.email.data = current_user.email
 
     return render_template('account.html', title='Account', form=form)
+
+@app.route('/delete', methods=['GET','POST'])
+def delete_account():
+    user = Users.query.filter_by(id=current_user.id)
+    db.session.delete(user)
+    db.session.commit()
+
+    return render_template('register.html')
+
 
 dummyData = [
     {

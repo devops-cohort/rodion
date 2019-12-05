@@ -49,6 +49,9 @@
                       		<div class="form-group">
                                 	{{ form.submit }}
 				</div>
+				<td>
+					<a href="{{ url_for('delete_account', id=form.id) }}"></a>
+				</td>
 			</form>
 	</div>
 {% endblock body_content %}

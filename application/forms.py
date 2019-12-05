@@ -6,7 +6,7 @@ from flask_login import LoginManager, current_user
 
 
 
-class SongForm(FlaskForm):
+class AddSongForm(FlaskForm):
     title = StringField('Title',
         validators=[
                 DataRequired(),
@@ -33,6 +33,29 @@ class SongForm(FlaskForm):
     )
 
     submit = SubmitField('Add song to library')
+
+class ShowSongForm(FlaskForm):
+    title = StringField('Title',
+        validators=[
+                Length(min=1, max=100)
+        ]
+    )
+    artist = StringField('Artist',
+        validators=[
+                Length(min=1, max=100)
+        ]
+    )
+    album = StringField('Album',
+        validators=[
+                Length(min=1, max=100)
+        ]
+    )
+    genre = StringField('Genre',
+        validators=[
+                Length(min=1, max=100)
+        ]
+    )
+    submit = SubmitField('Find Music')
 
 class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(),Email()])
