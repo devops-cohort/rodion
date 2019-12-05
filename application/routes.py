@@ -62,21 +62,14 @@ def songs():
     form = SongForm()
     if request.method == 'POST':
         song = Songs(
-                title=form.title,
-                artist=form.artist,
-                album=form.album,
-                genre=form.genre)
+                title=form.title.data,
+                artist=form.artist.data,
+                album=form.album.data,
+                genre=form.genre.data)
     
-#            content=form.content.data,
-#            author=current_user)
-#        db.session.add(postData)
-#        db.session.commit()
-#        return redirect(url_for('home'))
-#
-#    else:
-#        print(form.errors)
+        db.session.add(song)i
+        db.session.commit()
     return render_template('songs.html', title='Songs', form=form)
-#    title='Post', form=form)
 
 @app.route("/logout")
 def logout():

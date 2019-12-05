@@ -29,7 +29,7 @@ class Users(db.Model, UserMixin):
 
 class Songs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(150), nullable=False, unique=True)
+    title = db.Column(db.String(150), nullable=False)
     artist = db.Column(db.String(500), nullable=False)
     album = db.Column(db.String(30), nullable=False)
     genre = db.Column(db.String(30), nullable=False)
