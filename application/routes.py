@@ -100,9 +100,10 @@ def account():
 
 @app.route('/delete_account', methods=['GET','POST'])
 def delete_account():
-    user = Users.query.filter_by(id=current_user.id)
+    user_id = current_user.id
+    user = Users.query.filter_by(id=user_id).first()
     db.session.delete(user)
     db.session.commit()
 
-    return render_template('register.html')
+    return redirect(url_for('register'))
 
