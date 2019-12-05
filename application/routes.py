@@ -66,15 +66,48 @@ def addsongs():
         db.session.commit()
     return render_template('addsongs.html', title='Add Songs', form=form)
 
+
 @app.route('/showsongs', methods=['GET'])
 def showsongs():
-    print("#################################")
     form = ShowSongForm()
     title = form.title
     songsData = Songs.query.all()
-    print("#################################")
 
     return render_template('showsongs.html', title='Show Songs',songs=songsData, form=form)
+
+@app.route("/edit_song")
+def edit_song():
+    form = ShowSongForm()
+    songsData = Songs.query.all()
+    if request.method == 'POST':
+        song = Songs(
+                title=form.title.data,
+                artist=form.artist.data,
+                album=form.album.data,
+                genre=form.genre.data)
+        db.session.commit()
+    return render_template('showsongs.html', title='Show Songs',songs=songsData, form=form)
+
+@app.route("/delete_song")
+def delete_song():
+    #form = ShowSongForm()
+    #title = form.title
+    #songsData = Songs.query.all()
+    shit ="shit"
+
+def find_song():
+    if request.method == 'POST':
+        song = Songs(
+                title=form.title.data,
+                artist=form.artist.data,
+                album=form.album.data,
+                genre=form.genre.data)
+    
+    form = ShowSongForm()
+    title = form.title
+    songsData = Songs.query.all()
+
+
 
 @app.route("/logout")
 def logout():

@@ -2,8 +2,11 @@
 {% extends "layout.html" %}
 {% block body_content %}
         <h1>Show Songs</h1>
-        <p>I hope to display songs here saved in a database to start with</p>
- 	<h3>Title, Artist, Album, Genre</h3>
+        <p>I hope to display songs here saved in a database to start with </p>
+	<p>Implement edit</p>
+	<p>Implement delete</p>
+	<p>Implement user query</p>
+
 	<div class="form">
                 <form method="POST" action="">
                         {{ form.hidden_tag() }}
@@ -20,16 +23,66 @@
                                         {{ form.title }}
                                 {% endif %}
                         </div>
-		</form>
+                        <br>
+                        <div class="form-group">
+                                {{ form.artist.label }}
+                                {% if form.artist.errors %}
+                                        {{ form.artist }}
+                                        <div class="error">
+                                                {% for error in form.artist.errors %}
+                                                        <span>{{ error }}</span>
+                                                {% endfor %}
+                                        </div>
+                                {% else %}
+                                        {{ form.artist }}
+                                {% endif %}
+                        </div>
+			<br>
+                        <div class="form-group">
+                                {{ form.album.label }}
+                                {% if form.album.errors %}
+                                        {{ form.album }}
+                                        <div class="error">
+                                                {% for error in form.album.errors %}
+                                                        <span>{{ error }}</span>
+                                                {% endfor %}
+                                        </div>
+                                {% else %}
+                                        {{ form.album }}
+                                {% endif %}
+                        </div>
+			<br>
+			<div class="form-group">
+                                {{ form.genre.label }}
+                                {% if form.genre.errors %}
+                                        {{ form.genre }}
+                                        <div class="error">
+                                                {% for error in form.genre.errors %}
+                                                        <span>{{ error }}</span>
+                                                {% endfor %}
+                                        </div>
+                                {% else %}
+                                        {{ form.genre }}
+                                {% endif %}
+                        </div>
+			<br>
+			<br>
+                        <div class="form-group">
+                                {{ form.submit }}
+                        </div>
+
+            	</form>
 	</div>
-	<br>
-	<div class="form-group">
-		{{ form.submit }}
-	</div>
+	
+ 	<h3>Title, Artist, Album, Genre</h3>
+
+
 	{% for song in songs %}
 		<div>
 			<h3>{{ song.title }}, {{ song.artist }}, {{ song.album }}, {{ song.genre }}
 			</h3>
+			<a href="{{ url_for('edit_song') }}">Edit</a>
+			<a href="{{ url_for('delete_song') }}">Delete</a>
 			<br>
 		</div>
 	{% endfor %}
