@@ -1,19 +1,14 @@
 from flask import render_template,redirect, url_for, request
 from application import app, db
 from application.models import Users, Songs
-#Posts in previous import
 from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, AddSongForm, ShowSongForm
-#PostForm in previous import
 from application import app,db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 
-#@app.route('/')
 @app.route('/home')
 def home():
-    #postData = Posts.query.all()
-    #posts=postData
     return render_template('home.html', title = 'Home')
-
+@app.route('/')
 @app.route('/about')
 def about():
     return render_template('about.html', title = 'About')
@@ -111,16 +106,3 @@ def delete_account():
 
     return render_template('register.html')
 
-
-dummyData = [
-    {
-        "name": {"first":"Chester", "last":"Gardner"},
-        "title":"First Post",
-        "content":"This is some dummy data for Flask lectures"
-    },
-    {
-        "name": {"first":"Chris", "last":"Perrins"},
-        "title":"Second Post",
-        "content":"This is even more dummy data for Flask lectures"
-    }
-]
