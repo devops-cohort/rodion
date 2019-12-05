@@ -48,11 +48,12 @@
                         	</div>
                       		<div class="form-group">
                                 	{{ form.submit }}
-				</div>
-                        <a href="{{ url_for('delete_account') }}" class="btn btn-default btn-lg">
-                            <i class="fa fa-plus"></i>
-                            Delete
-                        </a>
-			</form>
+				            </div>
+                            <form action = "{{url_for('delete')}}" method="POST">
+                            <input type="number" name="number">
+                            <button>Delete</button>
+                            </form>
+                        
+			         </form>
 	</div>
 {% endblock body_content %}
