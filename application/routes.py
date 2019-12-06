@@ -110,7 +110,7 @@ def search_results(search):
     print(search_string)
     if search.data['search'] == '':
         search_string = current_user.id
-        #results = Songs.query.filter_by(user_id=search_string)
+        results = Songs.query.filter_by(user_id=search_string)
         return redirect('/results')
         
         print("Empty Search Field")
@@ -137,17 +137,7 @@ def search_results(search):
 
     if not results:
         print('No results found!')
-        return redirect('/home')
-@login_required
-@app.route("/user_songs")
-def user_songs():
-    results = []
-    search_string = current_user.id
-    print(search_string)
-    #results = Songs.query.filter_by(Songs.user_id=search_string)
-    table = Results(results)
-    table.border = True 
-    return render_template('results.html', table=table)   
+        return redirect('/home')  
 
 @app.route("/logout")
 def logout():
