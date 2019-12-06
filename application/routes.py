@@ -65,7 +65,7 @@ def addsongs():
                 artist=form.artist.data,
                 album=form.album.data,
                 genre=form.genre.data,
-                user_id=current_user.id
+                user_id=current_user.id)
     
         db.session.add(song)
         db.session.commit()
