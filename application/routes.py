@@ -144,7 +144,7 @@ def user_songs():
     results = []
     search_string = current_user.id
     print(search_string)
-    results = Songs.query.filter_by(Songs.user_id=search_string)
+    #results = Songs.query.filter_by(Songs.user_id=search_string)
     table = Results(results)
     table.border = True 
     return render_template('results.html', table=table)   
