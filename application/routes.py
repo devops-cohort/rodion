@@ -113,7 +113,6 @@ def search_results(search):
         #results = Songs.query.filter_by(user_id=search_string)
         #return redirect('/results')
         
-        print("Empty Search Field")
     if search.data['search'] != '':
         print('Search for :',search_string)
         print('Search in :',category_string)
