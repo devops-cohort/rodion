@@ -33,7 +33,7 @@ class Songs(db.Model):
     artist = db.Column(db.String(500), nullable=False)
     album = db.Column(db.String(30), nullable=False)
     genre = db.Column(db.String(30), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def __repr__(self):
         return ''.join([
