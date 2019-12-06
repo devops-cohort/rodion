@@ -1,13 +1,17 @@
 from flask import render_template,redirect, url_for, request
 from application import app, db
 from application.models import Users, Songs
-from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, AddSongForm, ShowSongForm
+from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, AddSongForm, ShowSongForm, SearchForm
 from application import app,db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/home', methods=['GET','POST'])
 def home():
-    return render_template('home.html', title = 'Home')
+    search = SearchForm(request.form)
+    if request.method == 'POST':
+        return search_results(search)
+    return render_template('home.html', title = 'Home', form=search)
+
 @app.route('/')
 @app.route('/about')
 def about():
@@ -95,27 +99,24 @@ def delete_song():
     #songsData = Songs.query.all()
     shit ="shit"
 
-@app.route('/find_song', methods=['GET', 'POST'])
-def find_song(search):
-    print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
-    #form = ShowSongForm(
-    search = SearchForm(request.form)
-    if request.method == 'POST':
-        return search_results(search)
+@app.route('/results')
+def search_results(search):
+    results = []
     search_string = search.data['search']
- 
+
     if search.data['search'] == '':
-        qry = db.query()
+        qry = db.session.query()
         results = qry.all()
- 
+
     if not results:
-        flash('No results found!')
-        return redirect('/')
+        print('No results found!')
+        return redirect('/home')
     else:
         # display results
         table = Songs(results)
         table.border = True
     return render_template('results.html', table=table)
+
 
 
 

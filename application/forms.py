@@ -99,8 +99,9 @@ class UpdateAccountForm(FlaskForm):
     #delete = SubmitField('Delete')
 
 class SearchForm(FlaskForm):
-    choices = [('Artist', 'Artist'),
+    choices = [('Title', 'Title'),
+               ('Artist', 'Artist'),
                ('Album', 'Album'),
-               ('Publisher', 'Publisher')]
+               ('Genre', 'Genre')]
     select = SelectField('Search for music:', choices=choices)
     search = StringField('')

@@ -2,25 +2,23 @@
 {% block body_content %}
 <doctype html>
 <head>
-    <title>Flask Music Database</title>
+    <title>A Simple Music App</title>
 </head>
  
-<h2>Flask Music Database</h2>
+<h2>A Simple Music App</h2>
  
 <p><p>
 <a href="{{ url_for('addsongs') }}"> Add Song </a>
- 
+
+{% from "_formhelpers.html" import render_field %}
 <form method=post>
-  <select name="Songs" form="SearchForm">
-	  <option value="title">Title</option>
-  	  <option value="artist">Artist</option>
-	  <option value="album">Album</option>
-	  <option value="genre">Genre</option>
-  </select>
-  {{ render_field(form.select) }}
-  <form method=get action="/find_song" id="SearchForm">
-  	Search:<input name="Search">
-  <p><input type=submit value=Search>
-</form
+	<d1>
+	  {{ render_field(form.select) }}
+	  <p>
+	  {{ render_field(form.search) }}
+	</d1>
+	<p><input type=submit value=Search>
+</form>
+
 
 {% endblock body_content %}>
