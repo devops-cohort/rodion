@@ -110,7 +110,7 @@ def search_results(search):
     if search.data['search'] == 'a':
         #search_string = current_user.id
         print(search_string)
-        results = Songs.query.filter_by(title=search_string)
+        results = Songs.query.filter_by(title="Dunkelheit")
         return redirect('/results')
         
     elif search.data['search'] != '':
