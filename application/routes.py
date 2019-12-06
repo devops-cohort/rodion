@@ -113,7 +113,7 @@ def search_results(search):
         #results = Songs.query.filter_by(user_id=search_string)
         #return redirect('/results')
         
-    if search.data['search'] != '':
+    elif search.data['search'] != '':
         print('Search for :',search_string)
         print('Search in :',category_string)
         if category_string == 'Title':
