@@ -61,7 +61,7 @@ def addsongs():
     form = AddSongForm()
     if request.method == 'POST':
         song = Songs(
-                song_id=current_user.id,
+                #song_id=current_user.id,
                 title=form.title.data,
                 artist=form.artist.data,
                 album=form.album.data,
