@@ -139,7 +139,7 @@ def search_results(search):
         return redirect('/home')
 @login_required
 @app.route("/user_songs")
-def user_songs()
+def user_songs():
     results = []
     search_string = current_user.id
     print(search_string)
