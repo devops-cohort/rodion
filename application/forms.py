@@ -113,3 +113,4 @@ class Results(Table):
     artist = Col('Artist')
     album = Col('Album')
     genre = Col('Genre')
+    user_id = Col('UserID',show=False)
