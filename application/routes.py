@@ -105,7 +105,6 @@ def search_results(search):
     results = []
 
     search_string = search.data['search']
-    print(search.data['select'])
     category_string = search.data['select']
     if search.data['search'] == ' ':
         #search_string = current_user.id
@@ -134,7 +133,7 @@ def search_results(search):
             table.border = True
         return render_template('results.html', table=table)
 
-    if not results:
+    elif not results:
         print('No results found!')
         return redirect('/home')  
 
