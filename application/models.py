@@ -18,7 +18,7 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(500), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
-    songs = db.relationship('Songs', backref='user', lazy=True)
+    #songs = db.relationship('Songs', backref='user', lazy=True)
     
     def __repr__(self):
         return ''.join([
@@ -33,7 +33,7 @@ class Songs(db.Model):
     artist = db.Column(db.String(500), nullable=False)
     album = db.Column(db.String(30), nullable=False)
     genre = db.Column(db.String(30), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    #user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def __repr__(self):
         return ''.join([
