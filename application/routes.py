@@ -108,8 +108,8 @@ def search_results(search):
     category_string = search.data['select']
     print(search_string)
     if search.data['search'] == '':
-        print("Empty string")
-        results = Songs.query.all()
+        search_string = current_user.id
+        results = Songs.query.filter_by(user_id=search_string)
         return redirect('/results')
         
         print("Empty Search Field")
@@ -137,14 +137,23 @@ def search_results(search):
     if not results:
         print('No results found!')
         return redirect('/home')
-    
+@login_required
+@app.route("/user_songs")
+def user_songs()
+    results = []
+    search_string = current_user.id
+    print(search_string)
+    results = Songs.query.filter_by(user_id=search_string)
+    table = Results(results)
+    table.border = True 
+    return render_template('results.html', table=table)   
+
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
 @app.route('/account', methods=['GET','POST'])
-@login_required
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
