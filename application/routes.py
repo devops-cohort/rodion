@@ -55,8 +55,8 @@ def register():
     return render_template('register.html', title = 'Register', form=form)
 
 
-@login_required
 @app.route('/addsongs', methods=['GET','POST'])
+@login_required
 def addsongs():
     form = AddSongForm()
     if request.method == 'POST':
