@@ -110,8 +110,8 @@ def search_results(search):
     if search.data['search'] == False:
         search_string = current_user.id
         print(search_string)
-        #results = Songs.query.filter_by(title="search_string")
-        #return redirect('/results')
+        results = Songs.query.all()
+        return redirect('/results')
         
     if search.data['search'] != '':
         print('Search for :',search_string)
