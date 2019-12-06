@@ -18,7 +18,7 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(500), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
-    songs - db.relationship('Songs', backref='user'. lazy=True)
+    songs - db.relationship('Songs', backref='user', lazy=True)
     
     def __repr__(self):
         return ''.join([
