@@ -61,6 +61,7 @@ def addsongs():
     form = AddSongForm()
     if request.method == 'POST':
         song = Songs(
+                song_id=current_user.id,
                 title=form.title.data,
                 artist=form.artist.data,
                 album=form.album.data,
@@ -143,7 +144,7 @@ def user_songs():
     results = []
     search_string = current_user.id
     print(search_string)
-    results = Songs.query.filter_by(user_id=search_string)
+    results = Songs.query.filter_by(Songs.user_id=search_string)
     table = Results(results)
     table.border = True 
     return render_template('results.html', table=table)   
