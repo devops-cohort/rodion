@@ -1,13 +1,25 @@
 {% extends "layout.html" %}
 {% block body_content %}
-	<h1>Home Page</h1>
-	<p>BOO!</p>
-	{% for post in posts %}
-		<div>
-			<h3>{{ post.title }}</h3>
-			<span>by <i>{{ post.author.first_name }} {{ post.author.last_name }}</i></span>
-			<span>on the <i>{{ post.date_posted }}</i></span>
-			<p> -- {{ post.content }}</p>
-		</div>
-	{% endfor %}
-{% endblock body_content %}
+<doctype html>
+<head>
+    <title>Flask Music Database</title>
+</head>
+ 
+<h2>Flask Music Database</h2>
+ 
+<p><p>
+<a href="{{ url_for('addsongs') }}"> Add Song </a>
+ 
+<form method=post>
+  <select name="Songs" form="SearchForm">
+	  <option value="title">Title</option>
+  	  <option value="artist">Artist</option>
+	  <option value="album">Album</option>
+	  <option value="genre">Genre</option>
+  </select>
+  <form action="/find_song" id="SearchForm">
+  	Search:<input name="Search">
+  <p><input type=submit value=Search>
+</form
+
+{% endblock body_content %}>

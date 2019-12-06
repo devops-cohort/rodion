@@ -5,7 +5,7 @@ from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, Ad
 from application import app,db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 
-@app.route('/home')
+@app.route('/home', methods=['GET','POST'])
 def home():
     return render_template('home.html', title = 'Home')
 @app.route('/')
@@ -75,10 +75,10 @@ def showsongs():
 
     return render_template('showsongs.html', title='Show Songs',songs=songsData, form=form)
 
-@app.route("/edit_song")
+@app.route('/edit_song', methods=['GET', 'POST'])
 def edit_song():
     form = ShowSongForm()
-    songsData = Songs.query.all()
+    songsData = Songs.query.all.first()
     if request.method == 'POST':
         song = Songs(
                 title=form.title.data,
@@ -95,17 +95,26 @@ def delete_song():
     #songsData = Songs.query.all()
     shit ="shit"
 
-def find_song():
+@app.route('/find_song', methods=['GET', 'POST'])
+def find_song(search):
+    #form = ShowSongForm(
+    search = SearchForm(request.form)
     if request.method == 'POST':
-        song = Songs(
-                title=form.title.data,
-                artist=form.artist.data,
-                album=form.album.data,
-                genre=form.genre.data)
-    
-    form = ShowSongForm()
-    title = form.title
-    songsData = Songs.query.all()
+        return search_results(search)
+    search_string = search.data['search']
+ 
+    if search.data['search'] == '':
+        qry = db.query()
+        results = qry.all()
+ 
+    if not results:
+        flash('No results found!')
+        return redirect('/')
+    else:
+        # display results
+        table = Songs(results)
+        table.border = True
+        return render_template('results.html', table=table)
 
 
 

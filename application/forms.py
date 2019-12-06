@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from application.models import Users
 from flask_login import LoginManager, current_user
@@ -97,3 +97,10 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('Email already in use')
     submit = SubmitField('Update')
     #delete = SubmitField('Delete')
+
+class SearchForm(FlaskForm):
+    choices = [('Artist', 'Artist'),
+               ('Album', 'Album'),
+               ('Publisher', 'Publisher')]
+    select = SelectField('Search for music:', choices=choices)
+    search = StringField('')
