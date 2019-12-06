@@ -44,12 +44,6 @@ class Songs(db.Model):
             'Genre: ', self.genre, '\r\n'
         ])
 
-Playlist = db.Table('playlist', db.Model.metadata,
-        db.Column('playlistid', db.Integer, primary_key=True),
-        db.Column('songid', db.Integer, db.ForeignKey('songs.id')))
-
-
-
 def load_song(id):
     return Songs.query.get(int(id))
         
