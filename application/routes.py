@@ -134,9 +134,9 @@ def search_results(search):
             table.border = True
         return render_template('results.html', table=table)
 
-    if not results:
-        print('No results found!')
-        return redirect('/home')  
+        if not results:
+            print('No results found!')
+            return redirect('/home')  
 
 @app.route("/logout")
 def logout():
