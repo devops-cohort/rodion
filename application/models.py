@@ -33,6 +33,8 @@ class Songs(db.Model):
     artist = db.Column(db.String(500), nullable=False)
     album = db.Column(db.String(30), nullable=False)
     genre = db.Column(db.String(30), nullable=False)
+    db.relationship('Playlists', backref='Song')
+
     def __repr__(self):
         return ''.join([
             'Song ID: ', str(self.id), '\r\n',
@@ -41,6 +43,12 @@ class Songs(db.Model):
             'Album: ', self.album, '\r\n',
             'Genre: ', self.genre, '\r\n'
         ])
+
+Playlist = db.Table('playlist', db.Model.metadata,
+        db.Column('playlistid', db.Integer, primary_key=True),
+        db.Column('songid', db.Integer, db.ForeignKey('songs.id')))
+
+
 
 def load_song(id):
     return Songs.query.get(int(id))

@@ -3,6 +3,7 @@ from wtforms import StringField, SubmitField, PasswordField, BooleanField, Selec
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from application.models import Users
 from flask_login import LoginManager, current_user
+from flask_table import Table, Col
 
 
 
@@ -105,3 +106,10 @@ class SearchForm(FlaskForm):
                ('Genre', 'Genre')]
     select = SelectField('Search for music:', choices=choices)
     search = StringField('')
+
+class Results(Table):
+    id = Col('ID', show=False)
+    title = Col('Title')
+    artist = Col('Artist')
+    album = Col('Album')
+    genre = Col('Genre')

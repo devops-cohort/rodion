@@ -1,7 +1,7 @@
 from flask import render_template,redirect, url_for, request
 from application import app, db
 from application.models import Users, Songs
-from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, AddSongForm, ShowSongForm, SearchForm
+from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, AddSongForm, ShowSongForm, SearchForm, Results
 from application import app,db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -102,24 +102,42 @@ def delete_song():
 @app.route('/results')
 def search_results(search):
     results = []
-    search_string = search.data['search']
 
+    search_string = search.data['search']
+    print(search.data['select'])
+    category_string = search.data['select']
+    print(search_string)
     if search.data['search'] == '':
-        qry = db.session.query()
-        results = qry.all()
+        print("Empty string")
+        results = Songs.query.all()
+        return redirect('/home')
+        
+        print("Empty Search Field")
+    if search.data['search'] != '':
+        print('Search for :',search_string)
+        print('Search in :',category_string)
+        if category_string == 'Title':
+            results = Songs.query.filter_by(title=search_string)
+            table = Results(results)
+            table.border = True
+        elif category_string == 'Artist':
+            results = Songs.query.filter_by(artist=search_string)
+            table = Results(results)
+            table.border = True
+        elif category_string == 'Album':
+            results = Songs.query.filter_by(album=search_string)
+            table = Results(results)
+            table.border = True
+        elif category_string == 'Genre':
+            results = Songs.query.filter_by(genre=search_string)
+            table = Results(results)
+            table.border = True
+        return render_template('results.html', table=table)
 
     if not results:
         print('No results found!')
         return redirect('/home')
-    else:
-        # display results
-        table = Songs(results)
-        table.border = True
-    return render_template('results.html', table=table)
-
-
-
-
+    
 @app.route("/logout")
 def logout():
     logout_user()
