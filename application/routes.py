@@ -108,7 +108,7 @@ def search_results(search):
     print(search.data['select'])
     category_string = search.data['select']
     if search.data['search'] == '':
-        search_string = current_user.id
+        search_string = current_user.first_name
         print(search_string)
         #results = Songs.query.filter_by(user_id=search_string)
         return redirect('/results')
