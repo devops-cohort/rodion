@@ -107,11 +107,11 @@ def search_results(search):
     search_string = search.data['search']
     print(search.data['select'])
     category_string = search.data['select']
-    if search.data['search'] == 'a':
+    if search.data['search'] == ' ':
         #search_string = current_user.id
         print(search_string)
-        results = Songs.query.filter_by(title="Dunkelheit")
-        return redirect('/results')
+        #results = Songs.query.filter_by(title="search_string")
+        #return redirect('/results')
         
     elif search.data['search'] != '':
         print('Search for :',search_string)
