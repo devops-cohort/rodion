@@ -6,24 +6,6 @@ from application import app,db
 from application.models import Users
 
 
-
-
-
-def test_aboutpage_view(self):
-    #Test that aboutpage is accesible
-    response = self.client.get(url_for('about'))
-    self.assertEqual(response.satus_code, 200)
-
-def test_login_view(self):
-    #Test that loginpage is accesible
-    response = self.client.get(url_for('login'))
-    self.assertEqual(response.satus_code, 200)
-
-def test_register_view(self):
-    #Test that registerpage is accesible
-    response = self.client.get(url_for('register'))
-    self.assertEqual(response.satus_code, 200)
-
 class TestBase(TestCase):
      def create_app(self):
          config_name = 'testing'
@@ -34,14 +16,14 @@ class Test(TestBase):
      def test_aboutpage_view(self):
         #Test that aboutpage is accesible
         response = self.client.get(url_for('about'))
-        self.assertEqual(response.satus_code, 200)
+        self.assertEqual(response.status_code, 200)
      def test_login_view(self):
         #Test that loginpage is accesible
         response = self.client.get(url_for('login'))
-        self.assertEqual(response.satus_code, 200)
+        self.assertEqual(response.status_code, 200)
      def test_register_view(self):
         #Test that registerpage is accesible
         response = self.client.get(url_for('register'))
-        self.assertEqual(response.satus_code, 200)
+        self.assertEqual(response.status_code, 200)
     
 
