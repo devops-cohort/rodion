@@ -8,6 +8,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/home', methods=['GET','POST'])
 def home():
     search = SearchForm(request.form)
+    print(search)
     if request.method == 'POST':
         return search_results(search)
     return render_template('home.html', title = 'Home', form=search)
