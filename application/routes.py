@@ -110,7 +110,7 @@ def search_results(search):
     print(search_string)
     if search.data['search'] == '':
         search_string = current_user.id
-        results = Songs.query.filter_by(user_id=search_string)
+        #results = Songs.query.filter_by(user_id=search_string)
         return redirect('/results')
         
         print("Empty Search Field")
