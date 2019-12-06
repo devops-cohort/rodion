@@ -8,17 +8,17 @@
 <h2>A Simple Music App</h2>
  
 <p><p>
-<a href="{{ url_for('addsongs') }}"> Add Song </a>
+<a href="{{ url_for('addsongs') }}"> Add Song </a>  
 
 {% from "_formhelpers.html" import render_field %}
 <form method=post>
 	<d1>
-	  {{ render_field(form.select) }}
+	  {{ render_field(form.select) }}	
 	  <p>
-	  {{ render_field(form.search) }}
+	  {{ render_field(form.search) }}	
 	</d1>
 	<p><input type=submit value=Search>
 </form>
 
 
-{% endblock body_content %}>
+{% endblock body_content %}

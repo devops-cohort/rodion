@@ -8,6 +8,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/home', methods=['GET','POST'])
 def home():
     search = SearchForm(request.form)
+    print(search)
     if request.method == 'POST':
         return search_results(search)
     return render_template('home.html', title = 'Home', form=search)
@@ -55,8 +56,8 @@ def register():
     return render_template('register.html', title = 'Register', form=form)
 
 
-@login_required
 @app.route('/addsongs', methods=['GET','POST'])
+@login_required
 def addsongs():
     form = AddSongForm()
     if request.method == 'POST':
@@ -64,7 +65,8 @@ def addsongs():
                 title=form.title.data,
                 artist=form.artist.data,
                 album=form.album.data,
-                genre=form.genre.data)
+                genre=form.genre.data,
+                user_id=current_user.id)
     
         db.session.add(song)
         db.session.commit()
@@ -99,20 +101,21 @@ def delete_song():
     #songsData = Songs.query.all()
     shit ="shit"
 
-@app.route('/results')
+@app.route('/results', methods=['GET','POST'])
 def search_results(search):
     results = []
 
     search_string = search.data['search']
-    print(search.data['select'])
     category_string = search.data['select']
     print(search_string)
     if search.data['search'] == '':
-        print("Empty string")
-        results = Songs.query.all()
-        return redirect('/results')
+        search_string = current_user.id
+        print(search_string)
+        results = Songs.query.filter_by(user_id=search_string)
+        print(results)
+        table = Results(results)
+        table.border = True
         
-        print("Empty Search Field")
     if search.data['search'] != '':
         print('Search for :',search_string)
         print('Search in :',category_string)
@@ -132,19 +135,18 @@ def search_results(search):
             results = Songs.query.filter_by(genre=search_string)
             table = Results(results)
             table.border = True
-        return render_template('results.html', table=table)
+    return render_template('results.html', table=table)
 
     if not results:
         print('No results found!')
-        return redirect('/home')
-    
+        return redirect('/home')  
+
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
 @app.route('/account', methods=['GET','POST'])
-@login_required
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
