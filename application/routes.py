@@ -56,7 +56,7 @@ def register():
 
 
 @app.route('/addsongs', methods=['GET','POST'])
-#@login_required
+@login_required
 def addsongs():
     form = AddSongForm()
     if request.method == 'POST':
