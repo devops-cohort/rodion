@@ -97,6 +97,7 @@ def delete_song():
 
 @app.route('/find_song', methods=['GET', 'POST'])
 def find_song(search):
+    print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
     #form = ShowSongForm(
     search = SearchForm(request.form)
     if request.method == 'POST':
@@ -114,7 +115,7 @@ def find_song(search):
         # display results
         table = Songs(results)
         table.border = True
-        return render_template('results.html', table=table)
+    return render_template('results.html', table=table)
 
 
 

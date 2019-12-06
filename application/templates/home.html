@@ -17,7 +17,8 @@
 	  <option value="album">Album</option>
 	  <option value="genre">Genre</option>
   </select>
-  <form action="/find_song" id="SearchForm">
+  {{ render_field(form.select) }}
+  <form method=get action="/find_song" id="SearchForm">
   	Search:<input name="Search">
   <p><input type=submit value=Search>
 </form
