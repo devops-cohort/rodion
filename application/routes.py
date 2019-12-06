@@ -112,7 +112,7 @@ def search_results(search):
         #results = Songs.query.filter_by(title="search_string")
         #return redirect('/results')
         
-    elif search.data['search'] != '':
+    if search.data['search'] != '':
         print('Search for :',search_string)
         print('Search in :',category_string)
         if category_string == 'Title':
@@ -133,7 +133,7 @@ def search_results(search):
             table.border = True
         return render_template('results.html', table=table)
 
-    elif not results:
+    if not results:
         print('No results found!')
         return redirect('/home')  
 
