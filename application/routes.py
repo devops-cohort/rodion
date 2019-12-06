@@ -110,7 +110,7 @@ def search_results(search):
     if search.data['search'] == '':
         print("Empty string")
         results = Songs.query.all()
-        return redirect('/home')
+        return redirect('/results')
         
         print("Empty Search Field")
     if search.data['search'] != '':
