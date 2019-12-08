@@ -116,3 +116,27 @@ class Results(Table):
     user_id = Col('UserID',show=False)
     edit = LinkCol('Edit', 'edit_song', url_kwargs=dict(id='id'))
     delete = LinkCol('Delete', 'delete_song', url_kwargs=dict(id='id'))
+
+class EditSongForm(FlaskForm):
+    title = StringField('Title',
+        validators=[
+                Length(min=1, max=100)
+        ]
+    )
+    artist = StringField('Artist',
+        validators=[
+                Length(min=1, max=100)
+        ]
+    )
+    album = StringField('Album',
+        validators=[
+                Length(min=1, max=100)
+        ]
+    )
+    genre = StringField('Genre',
+        validators=[
+                Length(min=1, max=100)
+        ]
+    )
+    submit = SubmitField('Edit Song')
+

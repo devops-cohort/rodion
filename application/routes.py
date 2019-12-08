@@ -1,7 +1,7 @@
 from flask import render_template,redirect, url_for, request
 from application import app, db
 from application.models import Users, Songs
-from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, AddSongForm, ShowSongForm, SearchForm, Results
+from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, AddSongForm, ShowSongForm, SearchForm, Results, EditSongForm
 from application import app,db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -84,25 +84,22 @@ def showsongs():
 def edit_song(id):
     temp =id 
     song=Songs.query.filter_by(id=temp).first()
-    form = AddSongForm()
-    print('Current title:i ',song.title)
-    if form.validate_on_submit():
-        song.title=form.title.data
-        song.artist=form.artist.data
-        song.album=form.album.data
-        song.genre=form.genre.data
-        db.session.commit()
-        return redirect(url_for('account'))
-    #if song.user_id == current_user.id:
-    #    print("Correct User")
-    #    if form.validate_on_submit:
-    #        song.title=form.title.data
-    #        song.artist=form.artist.data
-    #        song.album=form.album.data
-    #        song.genre=form.genre.data
-    #    db.session.commit()
-    print('Hopefully changed title: ',song.title)
-    print('ffffffffffffffffffffffffff',form.title.data)
+    print(song)
+    form = EditSongForm()
+    print(song.title)
+    print(form.title.data)
+    song.title=form.title.data,
+    song.artist=form.artist.data
+    song.album=form.album.data
+    song.genre=form.genre.data
+#    if request.method == 'POST':
+#        song = Songs(
+#                title=form.title.data,
+#                artist=form.artist.data,
+#                album=form.album.data,
+#                genre=form.genre.data,
+#                user_id=current_user.id)
+    db.session.commit()
     return render_template('edit_song.html', title='Edit', form=form)
    # else:
    #     return render_template('no_permission.html')
