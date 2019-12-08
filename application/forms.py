@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, PasswordField, BooleanField, Selec
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from application.models import Users
 from flask_login import LoginManager, current_user
-from flask_table import Table, Col
+from flask_table import Table, Col, LinkCol
 
 
 
@@ -114,3 +114,5 @@ class Results(Table):
     album = Col('Album')
     genre = Col('Genre')
     user_id = Col('UserID',show=False)
+    edit = LinkCol('Edit', 'edit_song', url_kwargs=dict(id='id'))
+    delete = LinkCol('Delete', 'delete_song', url_kwargs=dict(id='id'))

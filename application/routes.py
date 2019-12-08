@@ -5,14 +5,6 @@ from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, Ad
 from application import app,db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 
-@app.route('/home', methods=['GET','POST'])
-def home():
-    search = SearchForm(request.form)
-    print(search)
-    if request.method == 'POST':
-        return search_results(search)
-    return render_template('home.html', title = 'Home', form=search)
-
 @app.route('/')
 @app.route('/about')
 def about():
@@ -22,7 +14,7 @@ def about():
 def login():
     form = LoginForm()
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('search'))
     if form.validate_on_submit():
         user=Users.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
@@ -32,14 +24,14 @@ def login():
             if next_page:
                 return redirect(next_page)
             else:
-                return redirect(url_for('home'))
+                return redirect(url_for('search'))
 
     return render_template('login.html', title = 'Login',form=form)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('search'))
 
     form = RegistrationForm()
     
@@ -56,8 +48,15 @@ def register():
     return render_template('register.html', title = 'Register', form=form)
 
 
-@app.route('/addsongs', methods=['GET','POST'])
+@app.route('/search', methods=['GET','POST'])
 @login_required
+def search():
+    search = SearchForm(request.form)
+    if request.method == 'POST':
+        return search_results(search)
+    return render_template('search.html', title = 'Search', form=search)
+
+@app.route('/addsongs', methods=['GET','POST'])
 def addsongs():
     form = AddSongForm()
     if request.method == 'POST':
@@ -75,31 +74,51 @@ def addsongs():
 
 @app.route('/showsongs', methods=['GET'])
 def showsongs():
-    form = ShowSongForm()
-    title = form.title
-    songsData = Songs.query.all()
+    results = Songs.query.all()
+    table = Results(results)
+    table.border = True
 
-    return render_template('showsongs.html', title='Show Songs',songs=songsData, form=form)
+    return render_template('results.html',table=table)
 
-@app.route('/edit_song', methods=['GET', 'POST'])
-def edit_song():
-    form = ShowSongForm()
-    songsData = Songs.query.all.first()
-    if request.method == 'POST':
-        song = Songs(
-                title=form.title.data,
-                artist=form.artist.data,
-                album=form.album.data,
-                genre=form.genre.data)
+@app.route('/edit_song/<string:id>', methods=['GET', 'POST'])
+def edit_song(id):
+    temp =id 
+    song=Songs.query.filter_by(id=temp).first()
+    form = AddSongForm()
+    print('Current title:i ',song.title)
+    if form.validate_on_submit():
+        song.title=form.title.data
+        song.artist=form.artist.data
+        song.album=form.album.data
+        song.genre=form.genre.data
         db.session.commit()
-    return render_template('showsongs.html', title='Show Songs',songs=songsData, form=form)
+        return redirect(url_for('account'))
+    #if song.user_id == current_user.id:
+    #    print("Correct User")
+    #    if form.validate_on_submit:
+    #        song.title=form.title.data
+    #        song.artist=form.artist.data
+    #        song.album=form.album.data
+    #        song.genre=form.genre.data
+    #    db.session.commit()
+    print('Hopefully changed title: ',song.title)
+    print('ffffffffffffffffffffffffff',form.title.data)
+    return render_template('edit_song.html', title='Edit', form=form)
+   # else:
+   #     return render_template('no_permission.html')
 
-@app.route("/delete_song")
-def delete_song():
-    #form = ShowSongForm()
-    #title = form.title
-    #songsData = Songs.query.all()
-    shit ="shit"
+
+
+@app.route('/delete_song/<string:id>')
+def delete_song(id):
+    temp = id
+    song=Songs.query.filter_by(id=temp).first()
+    if song.user_id == current_user.id:
+        db.session.delete(song)
+        db.session.commit()
+        return redirect(url_for('search'))
+    else:
+        return render_template('no_permission.html')
 
 @app.route('/results', methods=['GET','POST'])
 def search_results(search):
@@ -139,7 +158,7 @@ def search_results(search):
 
     if not results:
         print('No results found!')
-        return redirect('/home')  
+        return redirect('/search')  
 
 @app.route("/logout")
 def logout():
@@ -164,8 +183,6 @@ def account():
 
 @app.route('/delete_account', methods=['GET','POST'])
 def delete_account():
-    user_id = current_user.id
-    user = Users.query.filter_by(id=user_id).first()
     db.session.delete(user)
     db.session.commit()
 

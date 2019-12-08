@@ -43,9 +43,6 @@ class Songs(db.Model):
             'Album: ', self.album, '\r\n',
             'Genre: ', self.genre, '\r\n'
         ])
-
-def load_song(id):
-    return Songs.query.get(int(id))
         
 @login_manager.user_loader
 def load_user(id):

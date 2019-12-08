@@ -81,8 +81,9 @@
 		<div>
 			<h3>{{ song.user_id}}, {{ song.title }}, {{ song.artist }}, {{ song.album }}, {{ song.genre }}
 			</h3>
+
 			<a href="{{ url_for('edit_song') }}">Edit</a>
-			<a href="{{ url_for('delete_song') }}">Delete</a>
+			<a href="/delete_song/{{song.id}}" >Delete</a>
 			<br>
 		</div>
 	{% endfor %}
