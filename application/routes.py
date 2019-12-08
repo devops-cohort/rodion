@@ -84,25 +84,17 @@ def showsongs():
 def edit_song(id):
     temp =id 
     song=Songs.query.filter_by(id=temp).first()
-    print(song)
     form = EditSongForm()
-    print(song.title)
-    print(form.title.data)
-    song.title=form.title.data,
-    song.artist=form.artist.data
-    song.album=form.album.data
-    song.genre=form.genre.data
-#    if request.method == 'POST':
-#        song = Songs(
-#                title=form.title.data,
-#                artist=form.artist.data,
-#                album=form.album.data,
-#                genre=form.genre.data,
-#                user_id=current_user.id)
-    db.session.commit()
-    return render_template('edit_song.html', title='Edit', form=form)
-   # else:
-   #     return render_template('no_permission.html')
+    if song.user_id == current_user.id:
+        if request.method == 'POST':
+                song.title=form.title.data
+                song.artist=form.artist.data
+                song.album=form.album.data
+                song.genre=form.genre.data
+        db.session.commit()
+        return render_template('edit_song.html', title='Edit', form=form)
+    else:
+        return render_template('no_permission.html')
 
 
 
@@ -123,18 +115,14 @@ def search_results(search):
 
     search_string = search.data['search']
     category_string = search.data['select']
-    print(search_string)
+
     if search.data['search'] == '':
         search_string = current_user.id
-        print(search_string)
         results = Songs.query.filter_by(user_id=search_string)
-        print(results)
         table = Results(results)
         table.border = True
         
     if search.data['search'] != '':
-        print('Search for :',search_string)
-        print('Search in :',category_string)
         if category_string == 'Title':
             results = Songs.query.filter_by(title=search_string)
             table = Results(results)

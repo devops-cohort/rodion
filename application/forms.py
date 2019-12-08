@@ -97,14 +97,13 @@ class UpdateAccountForm(FlaskForm):
             if user:
                 raise ValidationError('Email already in use')
     submit = SubmitField('Update')
-    #delete = SubmitField('Delete')
 
 class SearchForm(FlaskForm):
     choices = [('Title', 'Title'),
                ('Artist', 'Artist'),
                ('Album', 'Album'),
                ('Genre', 'Genre')]
-    select = SelectField('Search for music:', choices=choices)
+    select = SelectField('Search for music (a blank search will only show songs you have added:', choices=choices)
     search = StringField('')
 
 class Results(Table):
